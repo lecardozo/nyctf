@@ -11,22 +11,24 @@ SAMPLE_SIZE = 5542385 # roughtly 10% of the data
 def split_dataset(dataset_path: str):
     dirname = Path(dataset_path).parent
     if (Path(dirname, "training-set.parquet").exists() and
-        Path(dirname, "validation-set.parquet").exists()):
+        Path(dirname, "validation-set.parquet").exists() and
+        Path(dirname, "test-set.parquet").exists()):
         print("Reading pre-split datasets")
         training = pd.read_parquet("data/training-set.parquet")
         validation = pd.read_parquet("data/validation-set.parquet")
     else:
         print("Splitting dataset")
         data = pd.read_csv(dataset_path, nrows=SAMPLE_SIZE, parse_dates=["pickup_datetime"])
-        training, validation = train_test_split(data, random_state=RANDOM_SEED)
+        training, test = train_test_split(data, random_state=RANDOM_SEED)
+        training, validation = train_test_split(training, random_state=RANDOM_SEED)
         training.to_parquet("data/training-set.parquet")
         validation.to_parquet("data/validation-set.parquet")
+        test.to_parquet("data/test-set.parquet")
     
     return training, validation
 
 
 def clean_dataset(df):
-    print("Cleaning dataset")
     invalid_fare = (df.fare_amount <= 2.5)
     invalid_coordinates = (
         df.filter(regex="lon|lat").eq(0).any(axis=1) |
