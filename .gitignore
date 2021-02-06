@@ -1,2 +1,7 @@
 data/
-*.ipynb_checkpoints/*
+*.ipynb_checkpoints*
+*.egg-info/*
+*.pkl
+*.vscode
+*__pycache__*
+dist/

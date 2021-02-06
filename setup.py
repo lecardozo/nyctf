@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 
 SERVER_DEPENDENCIES = [
-    "flask", "flasgger", "marshmallow"
+    "flask"
 ]
 
 setup(
-    name="nyctfp",
+    name="nyctf",
     version="0.0.1",
     packages=find_packages(exclude=["test*"]),
     install_requires=[
@@ -15,10 +15,11 @@ setup(
         "cloudpickle==1.6.0",
         "xgboost==1.3.3",
         "smart_open",
-        "boto3"
-    ]
+        "boto3",
+        "marshmallow"
+    ],
     extras_require={
         "server": SERVER_DEPENDENCIES,
     },
-    entry_points={"console_scripts": ["mlcli=model.cli:cli"]}
+    entry_points={"console_scripts": ["mlcli=nyctf.cli:cli"]}
 )
