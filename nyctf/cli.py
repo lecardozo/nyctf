@@ -66,10 +66,6 @@ def inference(bucket, input_path, output_path, model_path, aws_profile):
         "inference", f"{bucket}/steps/inference.py", 
         args=["--output-path", output_path, "--input-path", input_path, "--model-path", model_path]
     )
-    import pprint
-
-    pprint.pprint(cluster_specs)
-    pprint.pprint(job_specs)
 
     # Create cluster and submit job
     cluster_info = emr.run_job_flow(**cluster_specs)
