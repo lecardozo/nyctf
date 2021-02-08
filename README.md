@@ -71,9 +71,8 @@ $ curl --location --request POST 'http://localhost:8080/predict' \
 #### Batch
 For batch inference you can use the `mlcli spark-inference` command. 
 
-DISCLAIMER: This command assumes you have a configured AWS account, 
-a bucket for artifacts and a role with permissions for creating/destroying EMR clusters,
-for reading/writing data for the required buckets.
+**DISCLAIMER:** This command assumes you have a configured AWS account,
+a bucket for artifacts and a role with permissions for creating/destroying EMR clusters, reading/writing data for the required buckets.
 
 This command will:
 - Package the model and send it somewhere we can access from EMR
