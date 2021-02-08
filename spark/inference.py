@@ -1,3 +1,4 @@
+import pyspark
 from nyctf.inference.predictor import BatchPredictor
 from nyctf.training.features import spark_preprocess
 
