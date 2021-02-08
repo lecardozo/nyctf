@@ -16,7 +16,7 @@ def run(input_path: str, output_path: str, model_path: str):
     if input_path.endswith(".parquet"):
         df = sqlContext.read.parquet(input_path)
     elif input_path.endswith(".csv"):
-        df = sqlContenxt.read.csv(input_path)
+        df = sqlContext.read.csv(input_path)
     else:
         ValueError("Data must be either in .parquet or .csv format")
 
