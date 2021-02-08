@@ -34,10 +34,10 @@ def preprocess(data):
     return data
 
 def spark_preprocess(df):
-    from pyspark.sql.function import pandas_udf, dayofweek, hour, to_timestamp
+    from pyspark.sql.functions import col, pandas_udf, dayofweek, hour, to_timestamp, when
     from pyspark.sql.types import LongType
 
-    df = df.withColumns("pickup_datetime", to_timestamp(df.pickup_datetime))
+    df = df.withColumn("pickup_datetime", to_timestamp(df.pickup_datetime))
 
     haversine_distance_udf = pandas_udf(haversine_distance, returnType=LongType())
     df = df.withColumn(

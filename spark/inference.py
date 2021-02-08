@@ -16,10 +16,10 @@ def run(input_path: str, output_path: str, model_path: str):
     if input_path.endswith(".parquet"):
         df = sqlContext.read.parquet(input_path)
     elif input_path.endswith(".csv"):
-        df = sqlContext.read.csv(input_path)
+        df = sqlContext.read.csv(input_path, header=True)
     else:
         ValueError("Data must be either in .parquet or .csv format")
-
+    
     df = spark_preprocess(df)
     predictor = BatchPredictor.from_serialized(model_path)
     df = predictor.spark_predict(df)
