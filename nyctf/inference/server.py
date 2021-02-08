@@ -2,7 +2,6 @@ from inspect import getfullargspec
 from .predictor import OnlinePredictor
 try:
     from flask import Flask, jsonify, request
-    from flasgger import Swagger
     HAS_SERVER_DEPENDENCIES = True
 except ImportError:
     HAS_SERVER_DEPENDENCIES = False
@@ -17,7 +16,6 @@ def create_server(model_path: str):
 
     predictor = OnlinePredictor.from_serialized(model_path)
     app = Flask(__name__)
-    Swagger(app)
     input_schema = get_schema(predictor.predict)()
 
     @app.route("/predict", methods=["POST"])
