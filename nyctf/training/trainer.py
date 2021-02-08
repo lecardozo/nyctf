@@ -65,4 +65,4 @@ def run(training_data: pd.DataFrame, validation_data: pd.DataFrame,
     )
 
     with open(artifact_path, "wb") as out:
-        cloudpickle.dump(model, out)
+        cloudpickle.dump(model, out, protocol=4)

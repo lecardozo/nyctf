@@ -44,19 +44,20 @@ class OnlinePredictor(Predictor):
 
 class BatchPredictor(Predictor):
 
-    def _spark_predict(hav_distance_km: pd.Series, day_of_week: pd.Series, hour: pd.Series):
+    def _spark_predict(self, hav_distance_km: pd.Series, day_of_week: pd.Series, hour: pd.Series) -> pd.Series:
         data = pd.DataFrame({
             "hav_distance_km": hav_distance_km,
             "day_of_week": day_of_week,
             "hour": hour
         })
-        return self.model.predict(data)
+
+        return pd.Series(self.model.predict(data))
     
     def spark_predict(self, features_df):
         from pyspark.sql.functions import col, pandas_udf
-        from pyspark.sql.types import LongType
-        predict_udf = pandas_udf(self._spark_predict, returnType=LongType())
-        df = df.withColumn(
+        from pyspark.sql.types import DoubleType
+        predict_udf = pandas_udf(self._spark_predict, returnType=DoubleType())
+        df = features_df.withColumn(
             "predictions", 
             predict_udf(col("hav_distance_km"), col("day_of_week"), col("hour"))
         )

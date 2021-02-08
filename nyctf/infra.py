@@ -6,7 +6,7 @@ from pathlib import Path
 def generate_cluster_config(cluster_name, bucket):
     config = {
         'Name': cluster_name,
-        'ReleaseLabel': 'emr-6.0.0',
+        'ReleaseLabel': 'emr-6.1.0',
         'Applications': [{'Name': 'Hadoop'}, {'Name': 'Spark'}],
         'BootstrapActions': [{
             'Name': 'Install Model Package',
@@ -22,6 +22,7 @@ def generate_cluster_config(cluster_name, bucket):
                     'Classification': 'export',
                     'Properties': {
                         'PYSPARK_PYTHON': '/usr/bin/python3',
+                        'ARROW_PRE_0_15_IPC_FORMAT': '1'
                     }
                 }]
             }

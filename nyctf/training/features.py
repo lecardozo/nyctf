@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-def haversine_distance(lon1: pd.Series, lat1: pd.Series, lon2: pd.Series, lat2: pd.Series):
+def haversine_distance(lon1: pd.Series, lat1: pd.Series, lon2: pd.Series, lat2: pd.Series) -> pd.Series:
     """
     Calculate the great circle distance between two points
     on the earth (specified in decimal degrees)
@@ -35,11 +35,12 @@ def preprocess(data):
 
 def spark_preprocess(df):
     from pyspark.sql.functions import col, pandas_udf, dayofweek, hour, to_timestamp, when
-    from pyspark.sql.types import LongType
+    from pyspark.sql.types import DoubleType
 
     df = df.withColumn("pickup_datetime", to_timestamp(df.pickup_datetime))
 
-    haversine_distance_udf = pandas_udf(haversine_distance, returnType=LongType())
+    haversine_distance_udf = pandas_udf(haversine_distance, returnType=DoubleType())
+
     df = df.withColumn(
         "hav_distance_km", 
         haversine_distance_udf(
