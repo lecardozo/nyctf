@@ -35,6 +35,7 @@ $ mlcli train --dataset-path=data/train.csv --artifact-path=model.pkl
 
 ### Evaluating
 For evaluating the model with unseen data, use the `mlcli evaluate` command.
+This will locally predict the `fare_amount` for each instance and then calculate the root mean squared error for the dataset.
 ```shell
 $ mlcli evaluate --model-path=model.pkl \
                  --test-dataset-path=data/test-set.parquet
@@ -48,7 +49,7 @@ For running your model inference procedure in online mode, use the `mlcli serve`
 This will start a server on port 8080 that exposes a `/predict` endpoint that expects to receive a POST 
 request with the input data in the payload, following the schema defined in `nyctf.predictor.FeatureSchema`.
 If the input data fails the schema validation, a response containing all the validation errors
-will be returned. Otherwise, the response will contain the predicted fare_amount. Here is an example:
+will be returned. Otherwise, the response will contain the predicted `fare_amount`. Here is an example:
 
 ```shell
 # Build the image
